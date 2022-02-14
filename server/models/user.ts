@@ -10,7 +10,7 @@ const userSchema = new Schema({
         trim: true,
         validate: [/^\S+@\S+\.\S+$/.test, 'Provide a valid email address!'],
     },
-    username: {
+    userName: {
         type: String,
         required: true,
         unique: true,
