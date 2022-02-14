@@ -29,23 +29,23 @@ export class UserRecord {
         await newUser.save()
     }
     // pobieranie jednego użytkownika poprzez jego ID
-    public async getOne(id: string): Promise<UserType> {
+    public static async getOne(id: string): Promise<UserType> {
         const user = await User.findById(id)
         return new UserRecord(user)
     }
 
 // pobieranie wszystkich użytkowników
-    public async getAll(): Promise<UserType[]> {
+    public static async getAll(): Promise<UserType[]> {
         const users = await User.find()
         return users.map(el => new UserRecord(el))
     }
 
 // usunięcie użytkownika po id
-    public async deleteUser(id: string): Promise<void> {
+    public static async deleteUser(id: string): Promise<void> {
         await User.findByIdAndDelete(id)
     }
 // edycja użytkownika, nie wiem czy dobrze zrobiłem z tym rozbiciem obiektów, ale teoretycznie powinno działać
-    public async editUser(id:string,newUserObj:UserType):Promise<UserType>{
+    public static async editUser(id:string,newUserObj:UserType):Promise<UserType>{
         const editedUser = newUserObj
         let user = await User.findById(id)
         user = {
