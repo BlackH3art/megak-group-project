@@ -6,9 +6,9 @@ const API = axios.create({
 
 
 // logowanie
-export const signIn = (userData) => API.post('/user/signin', userData);
+export const signIn = (userData) => API.post('/auth/signin', userData);
 // rejestracja nowego użytkownika
-export const signUp = (userData) => API.post('/user/signup', userData);
+export const signUp = (userData) => API.post('/auth/signup', userData);
 
 
 // dodanie zadania użytkownikowi
