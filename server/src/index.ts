@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import {handleError} from "./utils/errors";
 
 const app = express();
 const port = 5000;
@@ -12,6 +13,15 @@ const CONNECTION_URL = `mongodb+srv://${process.env.USER_NAME}:${process.env.PAS
 app.get("/", (req, res) => {
     res.send( "Hello world!" );
 });
+
+index.engine('.hbs', engine({
+    extname: '.hbs',
+    helpers: handlebarsHelpers,
+}));
+index.set('view engine', '.hbs');
+
+
+index.use(handleError);
 
 
 mongoose.connect(CONNECTION_URL)
