@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose";
 import { Task } from "../models/task";
 import { TaskType } from "../types/taskType";
+import { ValidationError } from "../utils/errors";
 
 export class TaskRecord {
     // Dodawanie tasków:
@@ -11,11 +12,20 @@ export class TaskRecord {
 
     // Usuwanie tasków:
     public static async deleteTask(id: ObjectId): Promise<void> {
+        //walidacja czy istnieje task o podanym id
+        if (!this.id) {
+            throw new ValidationError(`Id: ${this.id} doesn't exist. Unable to delete.`)
+        }
         await Task.deleteOne({ _id: id });
     }
 
     // Edytowanie tasków:
     public static async editTask(id: ObjectId, task: TaskType): Promise<void> {
+        //walidacja czy istnieje task o podanym id
+        if (!this.id) {
+            throw new ValidationError(`Unable to find task with id: ${this.id}.`)
+        }
+
         const { body, priority, title, } = task;
         await Task.updateOne({ _id: id }, { $set: { body, priority, title } });
     }
