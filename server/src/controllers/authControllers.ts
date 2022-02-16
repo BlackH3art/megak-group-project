@@ -10,7 +10,7 @@ export const signInUser = async (req: Request, res: Response) => {
       res.status(400).json({info:'Entered data is not valid'});
       return;
     }
-    if(user.checkPassword(req.body.password)) {
+    if(await user.checkPassword(req.body.password)) {
       res.status(200).json({info:'Signed in'});
     } else {
       res.status(400).json({info:'Entered data is not valid'});
