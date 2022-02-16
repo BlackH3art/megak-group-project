@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import {handleError} from "./utils/errors";
+import {handleError} from "../utils/errors";
 
 // routes
 import authRouter from "./routes/authRouter";
@@ -21,15 +21,7 @@ app.get("/", (req, res) => {
     res.send( "Hello world!" );
 });
 
-index.engine('.hbs', engine({
-    extname: '.hbs',
-    helpers: handlebarsHelpers,
-}));
-index.set('view engine', '.hbs');
-
-
-index.use(handleError);
-
+app.use(handleError);
 
 mongoose.connect(CONNECTION_URL)
     .then(() => {

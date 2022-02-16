@@ -1,4 +1,4 @@
-import {NextFunction} from "express";
+import {NextFunction, Request, Response} from "express";
 
 export class ValidationError extends Error {};
 
