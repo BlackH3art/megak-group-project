@@ -1,10 +1,8 @@
 import express from 'express';
-import {addTask, updateTask, deleteTask, getAllTasks, getOneTask} from 'src/controllers/userControllers';
-import {showMainPage} from "../controllers/mainControllers";
+import {addTask, updateTask, deleteTask, getAllTasks, getOneTask} from '../controllers/userControllers';
 
 const userRouter = express.Router();
 
-userRouter.get('/', showMainPage);
 userRouter.get('/api', getAllTasks);
 userRouter.get('/api/:taskId', getOneTask);
 userRouter.post('/api/:taskId', addTask);

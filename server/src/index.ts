@@ -11,15 +11,11 @@ const app = express();
 const port = 5000;
 const CONNECTION_URL = `mongodb+srv://${process.env.USER_NAME}:${process.env.PASSWORD}@todo-app.pylyo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
-
+app.use(express.json())
 // routes
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
 
-
-app.get("/", (req, res) => {
-    res.send( "Hello world!" );
-});
+app.use('/', authRouter);
+app.use('/api', userRouter);
 
 app.use(handleError);
 
