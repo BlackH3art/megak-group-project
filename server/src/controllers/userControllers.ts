@@ -1,7 +1,7 @@
 import {Task} from "../models/task";
 import {TaskRecord} from "../record/task.record";
 import { Request, Response } from 'express';
-import { ObjectId } from "mongoose";
+import { SchemaTypes } from "mongoose";
 
 // dodanie nowego zadania
 export const addTask = async (req: Request, res: Response) => {
@@ -28,7 +28,7 @@ export const updateTask = async (req: Request, res: Response) => {
       ...oldTask,
      ...newTask
    }
-   await TaskRecord.editTask(id,taskToUpdate)
+   await TaskRecord.editTask(new SchemaTypes.ObjectId(id),taskToUpdate)
 res.status(200).json('Task updated')
 
   } catch (error) {
