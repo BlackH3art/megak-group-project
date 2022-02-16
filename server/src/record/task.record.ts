@@ -11,8 +11,8 @@ export class TaskRecord {
     }
 
     // Usuwanie tasków:
-    public static async deleteTask(id: ObjectId): Promise<void> {
-        await Task.deleteOne({ _id: id });
+    public static async deleteTask(id: ObjectId): Promise<TaskType> {
+      return await Task.findByIdAndDelete(id);
     }
 
     // Edytowanie tasków:
