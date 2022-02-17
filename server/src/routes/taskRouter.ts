@@ -7,7 +7,7 @@ taskRouter.get('/', getAllTasks);
 taskRouter.get('/:taskId', getOneTask);
 taskRouter.post('/:taskId', addTask);
 taskRouter.patch('/:taskId', updateTask);
-taskRouter.delete('/api/:taskId', deleteTask);
+taskRouter.delete('/:taskId', deleteTask);
 
 // taskRouter.get('/user', getUser)
 // taskRouter.post('/user/:id', editUser)
