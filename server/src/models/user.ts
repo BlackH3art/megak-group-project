@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
-import {validateEmail} from "../../utils/validateEmail";
+import { Schema, model, SchemaTypes } from 'mongoose';
+import { validateEmail } from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
@@ -9,7 +9,7 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        validate:[validateEmail, 'Invalid email format']
+        validate: [validateEmail, 'Invalid email format']
         // validate: [/^\S+@\S+\.\S+$/.test, 'Provide a valid email address!'],
     },
     userName: {
@@ -25,7 +25,12 @@ const userSchema = new Schema({
         required: true,
         minLength: [5, 'Password must be at least 5 characters!'],
     },
-    tasks: [],
+    tasks: [
+        {
+            type: SchemaTypes.ObjectId,
+            ref: 'Task',
+        }
+    ],
 });
 
 /**
