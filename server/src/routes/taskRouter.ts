@@ -1,17 +1,17 @@
 import express from 'express';
 import {addTask, updateTask, deleteTask, getAllTasks, getOneTask} from '../controllers/userControllers';
 
-const apiRouter = express.Router();
+const taskRouter = express.Router();
 
-apiRouter.get('/api', getAllTasks);
-apiRouter.get('/api/:taskId', getOneTask);
-apiRouter.post('/api/:taskId', addTask);
-apiRouter.patch('/api/:taskId', updateTask);
-apiRouter.delete('/api/:taskId', deleteTask);
+taskRouter.get('/', getAllTasks);
+taskRouter.get('/:taskId', getOneTask);
+taskRouter.post('/:taskId', addTask);
+taskRouter.patch('/:taskId', updateTask);
+taskRouter.delete('/api/:taskId', deleteTask);
 
-// apiRouter.get('/api/user', getUser)
-// apiRouter.post('/api/user/:id', editUser)
-// apiRouter.delete('/api/user/:id', deleteUser)
-// apiRouter.post('/api/user', logOut)
+// taskRouter.get('/api/user', getUser)
+// taskRouter.post('/api/user/:id', editUser)
+// taskRouter.delete('/api/user/:id', deleteUser)
+// taskRouter.post('/api/user', logOut)
 
-export default apiRouter;
+export default taskRouter;

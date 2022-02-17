@@ -5,7 +5,7 @@ import {handleError} from "../utils/errors";
 
 // routes
 import authRouter from "./routes/authRouter";
-import apiRouter from "./routes/apiRouter";
+import taskRouter from "./routes/taskRouter";
 
 const app = express();
 const port = 5000;
@@ -15,7 +15,7 @@ app.use(express.json())
 // routes
 
 app.use('/', authRouter);
-app.use('/api', apiRouter);
+app.use('/api', taskRouter);
 
 app.use(handleError);
 
