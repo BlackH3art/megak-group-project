@@ -4,8 +4,8 @@ import {addTask, updateTask, deleteTask, getAllTasks, getOneTask} from '../contr
 const taskRouter = express.Router();
 
 taskRouter.get('/', getAllTasks);
+taskRouter.post('/', addTask);
 taskRouter.get('/:taskId', getOneTask);
-taskRouter.post('/:taskId', addTask);
 taskRouter.patch('/:taskId', updateTask);
 taskRouter.delete('/:taskId', deleteTask);
 

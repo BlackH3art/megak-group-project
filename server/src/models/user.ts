@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import {validateEmail} from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
@@ -8,7 +9,8 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        validate: [/^\S+@\S+\.\S+$/.test, 'Provide a valid email address!'],
+        validate:[validateEmail, 'Invalid email format']
+        // validate: [/^\S+@\S+\.\S+$/.test, 'Provide a valid email address!'],
     },
     userName: {
         type: String,
