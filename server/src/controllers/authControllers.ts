@@ -1,19 +1,26 @@
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import {User} from '../models/user';
 import {UserRecord} from "../record/user.record";
-import { Request, Response } from 'express';
+
+// access token na potrzeby generowania tokenu - do przeniesienia do przeniesienia do pliku ENV
+const JWT_TOKEN = 'tokenDoJWTdoPrzeniesieniaDoPlikuENV';
 
 export const signInUser = async (req: Request, res: Response) => {
   try {
     // zalogowanie użytkownika
-    const user = await User.findOne({ username: req.body.login });
+    const user = await User.findOne({ userName: req.body.login });
     if(!user) {
-      res.status(400).json({info:'Entered data is not valid'});
+      res.status(401).json({info:'Entered data is not valid'});
       return;
     }
-    if(await user.checkPassword(req.body.password)) {
-      res.status(200).json({info:'Signed in'});
+    const isPasswordValid = await user.checkPassword(req.body.password);
+    if(isPasswordValid) {
+      // generowanie jwt po wpisaniu prawidłowego hasła
+      const token = jwt.sign(user.toJSON(), JWT_TOKEN);
+      res.status(200).json({token});
     } else {
-      res.status(400).json({info:'Entered data is not valid'});
+      res.status(401).json({info:'Entered data is not valid'});
       return;
     }
   } catch (error) {
