@@ -1,7 +1,9 @@
-import { ObjectId } from "mongoose";
+import {ObjectId} from "mongoose";
 import { Task } from "../models/task";
+import { User } from "../models/user";
 import { TaskType } from "../types/taskType";
 import { ValidationError } from "../../utils/errors";
+
 
 export class TaskRecord {
     // Dodawanie tasków:
@@ -29,6 +31,11 @@ export class TaskRecord {
     // Pobieranie wszystkich tasków:
     public static async getAll(): Promise<TaskType[]> {
         return Task.find();
+    }
+
+    public static async getAllUserTasks(id: string): Promise<TaskType[]> {
+        const user = await User.findById(id).populate('tasks');
+        return user.tasks;
     }
 }
 

@@ -51,10 +51,9 @@ export const updateTask = async (req: Request, res: Response) => {
 
 export const getAllTasks = async (req: Request, res: Response) => {
     // @ts-ignore
-    const user = req.user
-    console.log(user)
     try {
-        const tasks = await TaskRecord.getAll()
+        // @ts-ignore
+        const tasks = await TaskRecord.getAllUserTasks(req.user._id)
         res.status(200).json(tasks)
     } catch (error) {
         console.log(error)
