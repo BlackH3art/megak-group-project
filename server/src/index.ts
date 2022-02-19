@@ -1,3 +1,4 @@
+import {userAuthMiddleware} from '../utils/userAuth'
 import express from "express";
 import mongoose from 'mongoose';
 import 'dotenv/config';
@@ -15,8 +16,7 @@ app.use(express.json())
 // routes
 
 app.use('/', authRouter);
-app.use('/api', taskRouter);
-
+app.use('/api',userAuthMiddleware, taskRouter);
 app.use(handleError);
 
 mongoose.connect(CONNECTION_URL)

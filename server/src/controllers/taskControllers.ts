@@ -5,6 +5,7 @@ import {SchemaTypes} from "mongoose";
 
 // dodanie nowego zadania
 export const addTask = async (req: Request, res: Response) => {
+
     try {
         const {title, body, priority} = req.body
         if (!title || !body) {
@@ -12,6 +13,9 @@ export const addTask = async (req: Request, res: Response) => {
             return// tu będzie docelowo osbługa naszymi errorami, wtedy bez bloku try/catch
         }
         await TaskRecord.addTask(req.body)
+
+        // @ts-ignore
+        console.log(taskAuthor.tasks)
         res.status(200).json({info: 'Task created'})
     } catch (error) {
         console.log(error)
@@ -42,6 +46,9 @@ export const updateTask = async (req: Request, res: Response) => {
 }
 
 export const getAllTasks = async (req: Request, res: Response) => {
+    // @ts-ignore
+    const user = req.user
+    console.log(user)
     try {
         const tasks = await TaskRecord.getAll()
         res.status(200).json(tasks)
