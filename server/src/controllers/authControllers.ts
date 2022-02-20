@@ -8,7 +8,6 @@ import {UserRecord} from "../record/user.record";
 
 
 export const signInUser = async (req: Request, res: Response) => {
-  const users = await User.find()
   try {
     // zalogowanie użytkownika
     let user = await User.findOne({ userName: req.body.userName });
@@ -23,7 +22,6 @@ export const signInUser = async (req: Request, res: Response) => {
       return;
     }
     // generowanie jwt po wpisaniu prawidłowego hasła
-    // user = user.toJSON()
     const token = jwt.sign(user.toJSON(), jwtAccsess, {expiresIn:'10m'});
     res.status(200).json({token});
   } catch (error) {
