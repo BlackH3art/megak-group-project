@@ -12,8 +12,6 @@ taskRouter.delete('/:taskId', deleteTask);
 
 
 
-// taskRouter.post('/user/:id', editUser)
-// taskRouter.delete('/user/:id', deleteUser)
-// taskRouter.post('/user', logOut)
+
 
 export default taskRouter;
