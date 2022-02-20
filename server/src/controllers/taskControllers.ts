@@ -1,9 +1,8 @@
 import {Task} from "../models/task";
 import {TaskRecord} from "../record/task.record";
 import {Request, Response} from 'express';
-import {Document, SchemaTypes} from "mongoose";
+import {SchemaTypes} from "mongoose";
 import {UserRecord} from "../record/user.record";
-import {UserType} from "../types/userType";
 
 // dodanie nowego zadania
 export const addTask = async (req: Request, res: Response) => {
@@ -40,7 +39,7 @@ export const updateTask = async (req: Request, res: Response) => {
             ...oldTask,
             ...newTask
         }
-        await TaskRecord.editTask(new SchemaTypes.ObjectId(id), taskToUpdate)
+        await TaskRecord.editTask(id, taskToUpdate)
         res.status(200).json('Task updated')
 
     } catch (error) {
@@ -81,7 +80,7 @@ export const getOneTask = async (req: Request, res: Response) => {
 export const deleteTask = async (req: Request, res: Response) => {
     const id = req.params.taskId
     try {
-       const deletedTask = await TaskRecord.deleteTask(new SchemaTypes.ObjectId(id))
+       const deletedTask = await TaskRecord.deleteTask(id)
         if(!deletedTask){
             res.status(400).json({info:`Task with id ${id} doesnt exist`})
             return

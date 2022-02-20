@@ -13,12 +13,12 @@ export class TaskRecord {
     }
 
     // Usuwanie tasków:
-    public static async deleteTask(id: ObjectId): Promise<TaskType> {
+    public static async deleteTask(id: string): Promise<TaskType> {
       return await Task.findByIdAndDelete(id);
     }
 
     // Edytowanie tasków:
-    public static async editTask(id: ObjectId, task: TaskType): Promise<void> {
+    public static async editTask(id: string, task: TaskType): Promise<void> {
         const { body, priority, title, } = task;
         await Task.updateOne({ _id: id }, { $set: { body, priority, title } });
     }

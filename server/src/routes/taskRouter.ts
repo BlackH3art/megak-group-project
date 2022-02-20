@@ -1,6 +1,5 @@
 import express from 'express';
 import {addTask, updateTask, deleteTask, getAllTasks, getOneTask} from '../controllers/taskControllers';
-import {showProfile} from "../controllers/userControllers";
 
 const taskRouter = express.Router();
 
