@@ -7,6 +7,7 @@ import {handleError} from "../utils/errors";
 // routes
 import authRouter from "./routes/authRouter";
 import taskRouter from "./routes/taskRouter";
+import {userRouter} from "./routes/userRouter";
 
 const app = express();
 const port = 5000;
@@ -17,6 +18,7 @@ app.use(express.json())
 
 app.use('/', authRouter);
 app.use('/api',userAuthMiddleware, taskRouter);
+app.use('/api/user', userAuthMiddleware, userRouter)
 app.use(handleError);
 
 mongoose.connect(CONNECTION_URL)

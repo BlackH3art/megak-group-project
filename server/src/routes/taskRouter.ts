@@ -10,8 +10,7 @@ taskRouter.get('/:taskId', getOneTask);
 taskRouter.patch('/:taskId', updateTask);
 taskRouter.delete('/:taskId', deleteTask);
 
-// @ts-ignore
-taskRouter.get('/user/profile', showProfile )
+
 
 // taskRouter.post('/user/:id', editUser)
 // taskRouter.delete('/user/:id', deleteUser)
