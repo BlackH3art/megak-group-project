@@ -1,6 +1,7 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 import { validateEmail } from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
+import {Task} from "./task";
 
 const userSchema = new Schema({
     email: {
@@ -42,6 +43,16 @@ userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
+});
+
+userSchema.post('findByIdAndDelete', async (doc) => {
+    if(doc) {
+        await Task.deleteMany({
+            _id: {
+                $in: doc.tasks,
+            },
+        });
+    }
 });
 
 /**
