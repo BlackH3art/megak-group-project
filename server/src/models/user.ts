@@ -45,7 +45,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.post('findByIdAndDelete', async (doc) => {
+userSchema.post('deleteOne', async (doc) => {
     if(doc) {
         await Task.deleteMany({
             _id: {
