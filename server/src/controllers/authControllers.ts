@@ -47,6 +47,4 @@ export const signUpUser = async (req: Request, res: Response) => {
   }
 }
 
-export const showMainPage = (req: Request, res: Response) => {
-  res.status(200).json({info:'Main page'})
-}
+

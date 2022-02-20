@@ -14,7 +14,6 @@ export async function userAuthMiddleware(req:Request, res:Response, next:NextFun
         }
         //@ts-ignore
         req.user = data
-        console.log(data)
         next();
     })
 }

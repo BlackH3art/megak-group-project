@@ -16,9 +16,9 @@ const CONNECTION_URL = `mongodb+srv://${process.env.USER_NAME}:${process.env.PAS
 app.use(express.json())
 // routes
 
-app.use('/', authRouter);
-app.use('/api',userAuthMiddleware, taskRouter);
+app.use('/api', authRouter);
 app.use('/api/user', userAuthMiddleware, userRouter)
+app.use('/api',userAuthMiddleware, taskRouter);
 app.use(handleError);
 
 mongoose.connect(CONNECTION_URL)
