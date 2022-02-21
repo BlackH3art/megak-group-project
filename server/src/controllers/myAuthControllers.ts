@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
-import { MyUserRecord } from "src/record/myUserRecord";
+import { MyUserRecord } from "../record/myUserRecord";
 
 import jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-
-import {jwtAccsess} from "../config";
 
 export const signIn = async (req: Request, res: Response) => {
 
@@ -18,7 +16,7 @@ export const signIn = async (req: Request, res: Response) => {
     if(!isPasswordValid) res.status(401).json({info:'Entered data is not valid'});
 
 
-    const token = jwt.sign(user, jwtAccsess, {expiresIn:'10m'});
+    const token = jwt.sign(user, process.env.JWT_ACCESS, {expiresIn:'1m'});
 
     res.status(200).json({ user, token });
 

@@ -7,7 +7,7 @@ import { UserContext } from '../../context/userContext';
 
 const AuthForm = ({ signIn }) => {
 
-  const [signingData, setSigningData] = useState({ login: "", password: "" });
+  const [signingData, setSigningData] = useState({ email: "", password: "" });
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -47,8 +47,8 @@ const AuthForm = ({ signIn }) => {
           <div className="flex flex-col w-[80%] bg-red-200" onSubmit={handleSubmit}>
             <form className="flex flex-col">
               <label>
-                Login:
-                <input className="rounded-full border-2 border-indigo-600 pl-5 m-2" name="login" type="text" onChange={handleChange} />
+                email:
+                <input className="rounded-full border-2 border-indigo-600 pl-5 m-2" name="email" type="text" onChange={handleChange} />
               </label>
 
               <label>

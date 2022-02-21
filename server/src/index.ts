@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from 'mongoose';
+import cors from 'cors';
 import 'dotenv/config';
 
 // utils
@@ -28,7 +29,7 @@ app.use(express.json())
 // app.use('/api/user', userAuthMiddleware, userRouter)
 // app.use('/api',userAuthMiddleware, taskRouter);
 
-
+app.use(cors());
 
 app.use('/auth', myAuthRouter);
 app.use('/user', myUserRouter);

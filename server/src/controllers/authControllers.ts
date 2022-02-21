@@ -22,7 +22,7 @@ export const signInUser = async (req: Request, res: Response) => {
       return;
     }
     // generowanie jwt po wpisaniu prawidłowego hasła
-    const token = jwt.sign(user.toJSON(), jwtAccsess, {expiresIn:'10m'});
+    const token = jwt.sign(user.toJSON(), process.env.JWT_ACCESS, {expiresIn:'10m'});
     res.status(200).json({token});
   } catch (error) {
     console.log(error);
