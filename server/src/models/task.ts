@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { TaskPriority } from '../types/taskType';
 
-const taskSchema = new Schema({
+export const taskSchema = new Schema({
     title: {
         type: String,
         required: true,
