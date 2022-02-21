@@ -4,7 +4,7 @@ import {User} from "../models/user";
 
 
 
-export const showProfile = async function (req:Request,res:Response){
+export const showProfile = async (req:Request,res:Response) => {
     // @ts-ignore
     const id = req.user._id
     try {
@@ -20,7 +20,7 @@ export const showProfile = async function (req:Request,res:Response){
     }
 }
 
-export const deleteUser = async function (req:Request, res:Response){
+export const deleteUser = async (req:Request, res:Response) => {
     // @ts-ignore
     const userEmail = req.user.email
     await User.deleteOne({email:userEmail})

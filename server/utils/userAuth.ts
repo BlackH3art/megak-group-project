@@ -4,7 +4,7 @@ import {jwtAccsess} from "../src/config";
 import {User} from "../src/models/user";
 
 export async function userAuthMiddleware(req:Request, res:Response, next:NextFunction){
-    const token = req.headers['authorization']?.split(" ")[1]
+    const token = req.headers.authorization?.split(" ")[1]
     if(!token){
         return res.status(401).json('Token invalid')
     }
@@ -12,7 +12,7 @@ export async function userAuthMiddleware(req:Request, res:Response, next:NextFun
         if(err){
             return res.status(401).json('Token invalid')
         }
-        //@ts-ignore
+        // @ts-ignore
         req.user = data
         next();
     })

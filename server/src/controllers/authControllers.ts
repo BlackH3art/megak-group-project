@@ -10,7 +10,7 @@ import {UserRecord} from "../record/user.record";
 export const signInUser = async (req: Request, res: Response) => {
   try {
     // zalogowanie użytkownika
-    let user = await User.findOne({ userName: req.body.userName });
+    const user = await User.findOne({ userName: req.body.userName });
 
     if(!user) {
       res.status(401).json({info:'Entered data is not valid'});
