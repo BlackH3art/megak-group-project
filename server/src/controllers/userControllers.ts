@@ -1,49 +1,29 @@
-import { Request, Response } from 'express';
-
-export const addTask = async (req: Request, res: Response) => {
-  try {
-    // dodanie nowego zadania
+import {Request, Response} from "express";
+import {User} from "../models/user";
 
 
 
 
-
-  } catch (error) {
-    // obsługa błędu
-
-
-
-  }
+export const showProfile = async function (req:Request,res:Response){
+    // @ts-ignore
+    const id = req.user._id
+    try {
+        const user = await User.findById(id)
+        if(!user){
+            res.status(400).json({info:`Task with id ${id} doesnt exist`})
+            return
+        }
+        res.status(200).json(user)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json(error.message)
+    }
 }
 
-export const updateTask = async (req: Request, res: Response) => {
-  try {
-    // aktualizacja zadania
-
-
-
-
-
-  } catch (error) {
-    // obsługa błędu
-
-
-
-  }
+export const deleteUser = async function (req:Request, res:Response){
+    // @ts-ignore
+    const userEmail = req.user.email
+    await User.deleteOne({email:userEmail})
+    res.status(200).json(`Account ${userEmail} deleted.`)
 }
 
-export const deleteTask = async (req: Request, res: Response) => {
-  try {
-    // usuwanie zadania
-
-
-
-
-
-  } catch (error) {
-    // obsługa błędu
-
-
-
-  }
-}

@@ -6,7 +6,7 @@ import { ValidationError } from "../../utils/errors";
 // nasz user ma tylko te 4 właściwości, tasks będzie tablicą obiektów
 export class UserRecord {
     // dodawanie użytkownika do bazy danych
-    public async createUser(newUserObj:UserType): Promise<void> {
+    public static async createUser(newUserObj:UserType): Promise<void> {
         await User.create(newUserObj)
     }
     // pobieranie jednego użytkownika poprzez jego ID

@@ -1,5 +1,7 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, SchemaTypes } from 'mongoose';
+import { validateEmail } from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
+import {Task} from "./task";
 
 const userSchema = new Schema({
     email: {
@@ -8,7 +10,8 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        validate: [/^\S+@\S+\.\S+$/.test, 'Provide a valid email address!'],
+        validate: [validateEmail, 'Invalid email format']
+        // validate: [/^\S+@\S+\.\S+$/.test, 'Provide a valid email address!'],
     },
     userName: {
         type: String,
@@ -23,7 +26,12 @@ const userSchema = new Schema({
         required: true,
         minLength: [5, 'Password must be at least 5 characters!'],
     },
-    tasks: [],
+    tasks: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Task',
+        }
+    ],
 });
 
 /**
@@ -37,6 +45,16 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+userSchema.post('deleteOne', async (doc) => {
+    if(doc) {
+        await Task.deleteMany({
+            _id: {
+                $in: doc.tasks,
+            },
+        });
+    }
+});
+
 /**
  * metoda porównująca wprowadzone hasło z hashem przechowywanym w bazie danych - zwraca boolean
  */
@@ -45,5 +63,4 @@ userSchema.methods = {
         return (await bcrypt.compare(password, this.password));
     },
 };
-
 export const User = model('User', userSchema);
