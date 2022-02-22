@@ -12,7 +12,7 @@ export const signUp = (userData) => API.post('/auth/sign-up', userData);
 
 
 // dodanie zadania użytkownikowi
-export const addNewTask = (userId, newTask) => API.post(`/user/${userId}`, newTask);
+export const addNewTask = (userId, newTask) => API.post(`/user/${userId}/task`, newTask);
 // aktualizacja istniejącego taska
 export const updateTask = (userId, taskId, updatedTask) => API.patch(`/user/${userId}/${taskId}`, updatedTask);
 // usuwanie taska

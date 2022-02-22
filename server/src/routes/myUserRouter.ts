@@ -3,9 +3,9 @@ import { deleteUser, addTask, updateTask, deleteTask } from '../controllers/myUs
 
 const myUserRouter = express.Router();
 
-myUserRouter.post('/task',addTask );
-myUserRouter.patch('/task', updateTask);
-myUserRouter.delete('/task', deleteTask);
+myUserRouter.post('/:userId/task', addTask);
+myUserRouter.patch('/:userId/task', updateTask);
+myUserRouter.delete('/:userId/task', deleteTask);
 
 myUserRouter.delete('/', deleteUser);
 

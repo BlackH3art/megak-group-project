@@ -17,7 +17,7 @@ const AuthForm = ({ signIn }) => {
     try {
       const user = signIn ? await api.signIn(signingData) : await api.signUp(signingData);
       
-      setUser(user);
+      setUser(user.data.user);
 
       navigate('/user');
 

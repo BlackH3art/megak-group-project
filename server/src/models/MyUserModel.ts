@@ -1,9 +1,11 @@
 import { Schema, model } from 'mongoose';
 import { validateEmail } from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
-import {Task, taskSchema} from "./task";
+import {Task} from "./task";
+import { myTaskSchema } from './MyTaskModel';
+import { MyUserType } from 'src/types/myUserInterface';
 
-const userSchema = new Schema({
+const userSchema = new Schema<MyUserType>({
     email: {
         type: String,
         required: true,
@@ -18,7 +20,7 @@ const userSchema = new Schema({
         required: true,
         minLength: [5, 'Password must be at least 5 characters!'],
     },
-    tasks: [taskSchema],
+    tasks: [myTaskSchema],
 });
 
 /**
@@ -50,4 +52,4 @@ userSchema.methods = {
         return (await bcrypt.compare(password, this.password));
     },
 };
-export const Users = model('Users', userSchema);
+export const Users = model<MyUserType>('Users', userSchema);
