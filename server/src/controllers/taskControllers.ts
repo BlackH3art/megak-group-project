@@ -9,7 +9,7 @@ export const addTask = async (req: Request, res: Response) => {
     try {
         // @ts-ignore
         // przepraszam za any ale bez typu wywala błąd, że typeUser nie ma methody save()
-        const user = await UserRecord.getOne(req.user._id);
+        const user: any = await UserRecord.getOne(req.user._id);
         const {title, body, priority} = req.body
         if (!title || !body) {
             res.status(400).json({info: 'Task title and contents are required'})
@@ -18,7 +18,7 @@ export const addTask = async (req: Request, res: Response) => {
         const taskId = await TaskRecord.addTask(req.body)
         user.tasks.push(await TaskRecord.getOne(taskId))
         await user.save()
-        
+
         res.status(200).json({info: 'Task created'})
     } catch (error) {
         console.log(error)

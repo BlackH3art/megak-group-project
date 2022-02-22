@@ -3,9 +3,9 @@ import { validateEmail } from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
 import {Task} from "./task";
 import { myTaskSchema } from './MyTaskModel';
-import { MyUserType } from 'src/types/myUserInterface';
+import { MyUserInterface } from 'src/types/myUserInterface';
 
-const userSchema = new Schema<MyUserType>({
+const userSchema = new Schema<MyUserInterface>({
     email: {
         type: String,
         required: true,
@@ -52,4 +52,4 @@ userSchema.methods = {
         return (await bcrypt.compare(password, this.password));
     },
 };
-export const Users = model<MyUserType>('Users', userSchema);
+export const Users = model<MyUserInterface>('Users', userSchema);
