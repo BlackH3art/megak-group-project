@@ -9,7 +9,7 @@ const TodoList = () => {
 
   const defaultAddTaskState = { task: '', createdAt: '', isDone: false};
   const [taskToDo, setTaskToDo] = useState(defaultAddTaskState);
-  const { user } = useContext(UserContext);
+  const { user, tasks } = useContext(UserContext);
 
   const mockdata = [
     { task: "zjeść trampki", done: true },
@@ -18,8 +18,8 @@ const TodoList = () => {
     { task: "maszerować kombinezony", done: true },
   ]
 
-  const completedTasks = mockdata.filter(item => item.isDone === true);
-  const notCompletedTasks = mockdata.filter(item => item.isDone === false);
+  const completedTasks = tasks.filter(item => item.isDone === true);
+  const notCompletedTasks = tasks.filter(item => item.isDone === false);
 
   const handleChange = (e) => {
     setTaskToDo({
@@ -70,7 +70,7 @@ const TodoList = () => {
         <div>
           <ul>
             {notCompletedTasks.map((item, index) => (
-              <ListElement key={index} item={item} index={index} />
+              <ListElement key={index} item={item} index={index} id={item._id} userID={user._id} />
             ))}
           </ul>
         </div>
@@ -79,7 +79,7 @@ const TodoList = () => {
         <div>
           <ul>
             {completedTasks.map((item, index) => (
-              <ListElement key={index} item={item} index={index} />
+              <ListElement key={index} item={item} index={index} id={item._id} userID={user._id} />
             ))}
           </ul>
         </div>

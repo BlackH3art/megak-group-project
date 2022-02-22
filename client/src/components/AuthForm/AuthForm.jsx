@@ -8,7 +8,7 @@ import { UserContext } from '../../context/userContext';
 const AuthForm = ({ signIn }) => {
 
   const [signingData, setSigningData] = useState({ email: "", password: "" });
-  const { setUser } = useContext(UserContext);
+  const { setUser, setTasks } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ const AuthForm = ({ signIn }) => {
       const user = signIn ? await api.signIn(signingData) : await api.signUp(signingData);
       
       setUser(user.data.user);
+      setTasks(user.data.user.tasks);
 
       navigate('/user');
 

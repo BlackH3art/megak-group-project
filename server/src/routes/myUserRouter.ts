@@ -1,13 +1,15 @@
 import express from 'express';
-import { deleteUser, addTask, updateTask, deleteTask } from '../controllers/myUserController'
+import { addTask, updateTask, deleteTask, deleteUser, getUserTasks } from '../controllers/myUserController'
 
 const myUserRouter = express.Router();
 
+myUserRouter.get('/:userId', getUserTasks);
 myUserRouter.post('/:userId/task', addTask);
 myUserRouter.patch('/:userId/task', updateTask);
 myUserRouter.delete('/:userId/task', deleteTask);
 
-myUserRouter.delete('/', deleteUser);
+myUserRouter.delete('/:userId', deleteUser);
+
 
 
 export default myUserRouter;
