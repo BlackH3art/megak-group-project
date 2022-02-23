@@ -10,8 +10,15 @@ const ListElement = ({ item, index, userID, id }) => {
   const { setTasks } = useContext(UserContext);
 
   const updateTasks = async () => {
-    const tasks = await api.getTasks(userID);
-    setTasks(tasks);
+
+    try {
+      const response = await api.getTasks(userID);
+
+      setTasks(response.data);
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleChange = async () => {
