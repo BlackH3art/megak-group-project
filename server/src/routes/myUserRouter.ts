@@ -3,10 +3,10 @@ import { addTask, updateTask, deleteTask, deleteUser, getUserTasks } from '../co
 
 const myUserRouter = express.Router();
 
-myUserRouter.get('/:userId', getUserTasks);
+myUserRouter.get('/:userId/task', getUserTasks);
 myUserRouter.post('/:userId/task', addTask);
 myUserRouter.patch('/:userId/:taskId', updateTask);
-myUserRouter.delete('/:userId/:task', deleteTask);
+myUserRouter.delete('/:userId/:taskId', deleteTask);
 
 myUserRouter.delete('/:userId', deleteUser);
 
