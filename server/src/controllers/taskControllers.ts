@@ -49,7 +49,6 @@ export const updateTask = async (req: Request, res: Response) => {
 }
 
 export const getAllTasks = async (req: Request, res: Response) => {
-    // @ts-ignore
     try {
         // @ts-ignore
         const tasks = await TaskRecord.getAllUserTasks(req.user._id)

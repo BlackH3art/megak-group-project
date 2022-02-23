@@ -1,8 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, {Schema, Types} from 'mongoose';
 import { Request, Response } from "express";
 import { TaskItem } from "../models/MyTaskModel";
 import { MyUserRecord } from "../record/myUserRecord";
 import { MyUserInterface } from "../types/myUserInterface";
+import {TaskRecord} from "../record/task.record";
+import {Users} from "../models/MyUserModel";
+import myAuthRouter from "../routes/myAuthRouter";
+import { SchemaTypes } from 'mongoose'
+import * as Mongoose from "mongoose";
 
 
 
@@ -18,7 +23,10 @@ export const addTask = async (req: Request, res: Response) => {
     
     const user: MyUserInterface = await MyUserRecord.getOne(userId);
     
-    if (!task || !createdAt) res.status(400).json({info: 'Task title and contents are required'});
+    if (!task) {
+      res.status(400).json({info: 'Task content are required'});
+      return;
+    }
     
     // utworzenie taska na podstawie modelu mongoose - tu tworzy się "subdokument"
     const newTask = new TaskItem(req.body);
@@ -38,12 +46,20 @@ export const addTask = async (req: Request, res: Response) => {
   }
 }
 
-export const getUserTasks = (req: Request, res: Response) => {
+export const getUserTasks =  async (req: Request, res: Response) => {
+  let {userId} = req.params
+    const user = await Users.findById(userId)
+    res.status(200).json(user.tasks)
   return;
 }
+// zostawiam niedokończone bo nie wiem jaki argument podać aby wyszukać konkretnego taska z tablicy tasków (zwykłe id nie znajduje nic)
+export const updateTask = async (req: Request, res: Response) => {
+  const {userId, taskId} = req.params
+  console.log(userId,taskId)
+  const user = await Users.findById(userId)
+  let tasks = user.tasks
 
-export const updateTask = (req: Request, res: Response) => {
-  return;
+  res.status(200).json('test')
 }
 
 export const deleteTask = (req: Request, res: Response) => {

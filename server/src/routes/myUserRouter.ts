@@ -5,8 +5,8 @@ const myUserRouter = express.Router();
 
 myUserRouter.get('/:userId', getUserTasks);
 myUserRouter.post('/:userId/task', addTask);
-myUserRouter.patch('/:userId/task', updateTask);
-myUserRouter.delete('/:userId/task', deleteTask);
+myUserRouter.patch('/:userId/:taskId', updateTask);
+myUserRouter.delete('/:userId/:task', deleteTask);
 
 myUserRouter.delete('/:userId', deleteUser);
 
