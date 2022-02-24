@@ -86,8 +86,31 @@ export const updateTask = async (req: Request, res: Response) => {
 
 
 
-export const deleteTask = (req: Request, res: Response) => {
-  return;
+export const deleteTask = async (req: Request, res: Response) => {
+  const {userId, taskId} = req.params;
+  try {
+    // sprawdzenie czy ID użytkownika jest poprawne
+    if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send('No user with that ID');
+    // sprawdzenie czy istnieje task o tym ID
+    if(!(await Users.findById(userId)).tasks.id(taskId)) return res.status(404).send('No task with that ID');
+    // usuwanie subdokumentu z tabeli tasków w znalezionym użytkowniku
+    Users.findOneAndUpdate(
+        { _id: userId },
+        { $pull: { tasks: { _id: taskId} } },
+        { new: true },
+        (err) => {
+          if (err) { console.log(err) }
+        }
+    )
+
+    res.status(200).json({ info: `task ID: ${taskId} has been deleted successfully` });
+
+  } catch (error) {
+    console.log('error deleting task', error.message);
+    console.log(error);
+
+    res.status(400).json({ info: "Error with deleting task"});
+  }
 }
 export const deleteUser = (req: Request, res: Response) => {
   return;
