@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
 
+import * as api from '../../api/index';
+
 const Navigation = () => {
 
   const { user, setUser } = useContext(UserContext);
@@ -9,6 +11,13 @@ const Navigation = () => {
   const logOut = () => {
     setUser(null);
   }
+
+  const deleteAccount = async () => {
+
+    await api.deleteUser(user._id);
+    setUser(null);
+
+  } 
 
   return (
     <>
@@ -22,8 +31,10 @@ const Navigation = () => {
 
           { user ? (
             <div className='flex items-center'>
-              <p className='mr-5'>{user.login}</p>
+              <p className='mr-5'>{user.email}</p>
               <button className="pt-2 pb-2 pr-5 pl-5 rounded-full border-2 border-indigo-600" onClick={logOut}>wyloguj</button>
+              <button className="pt-2 pb-2 pr-5 pl-5 rounded-full border-2 border-indigo-600 ml-5" onClick={deleteAccount}>usuń użytkownika</button>
+              
             </div>
           ) : (
             <div>

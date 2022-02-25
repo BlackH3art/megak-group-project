@@ -7,25 +7,18 @@ import ListElement from "./ListElement";
 
 const TodoList = () => {
 
-  const defaultAddTaskState = { userID: '', task: '', done: false};
+  const defaultAddTaskState = { task: '', createdAt: '', isDone: false};
   const [taskToDo, setTaskToDo] = useState(defaultAddTaskState);
-  const { user } = useContext(UserContext);
+  const { user, tasks, setTasks } = useContext(UserContext);
 
-  const mockdata = [
-    { task: "zjeść trampki", done: true },
-    { task: "zjeść pomidorki", done: false },
-    { task: "ugotować papugę", done: true },
-    { task: "maszerować kombinezony", done: true },
-  ]
-
-  const completedTasks = mockdata.filter(item => item.done === true);
-  const notCompletedTasks = mockdata.filter(item => item.done === false);
+  const completedTasks = tasks.filter(item => item.isDone === true);
+  const notCompletedTasks = tasks.filter(item => item.isDone === false);
 
   const handleChange = (e) => {
     setTaskToDo({
-      userID: user.login,
+      ...taskToDo,
       task: e.target.value,
-      done: false 
+      
     });
   }
 
@@ -33,9 +26,18 @@ const TodoList = () => {
     e.preventDefault();
 
     try {
-      const response = await api.addNewTask(taskToDo.userID, taskToDo);
+
+      const taskToAdd = {
+        ...taskToDo,
+        createdAt: new Date(),
+        isDone: false 
+      }
+      const response = await api.addNewTask(user._id, taskToAdd);
       
       if (response) {
+        const res = await api.getTasks(user._id);
+
+        setTasks(res.data);
         setTaskToDo(defaultAddTaskState);
       }
 
@@ -57,14 +59,14 @@ const TodoList = () => {
             <input className="w-full rounded-full border-2 border-indigo-600 pt-2 pb-2 pr-5 pl-5 ml-5" name="task" type="text" onChange={handleChange} value={taskToDo.task} />
           </label>
 
-          <button className="rounded-full border-2 border-indigo-600 pt-2 pb-2 pr-5 pl-5 ml-5">dodaj</button>
+          <button type="submit" className="rounded-full border-2 border-indigo-600 pt-2 pb-2 pr-5 pl-5 ml-5">dodaj</button>
         </form>
 
         <h1 className="text-2xl pt-10">Do zrobienia:</h1>
         <div>
           <ul>
             {notCompletedTasks.map((item, index) => (
-              <ListElement key={index} item={item} index={index} />
+              <ListElement key={index} item={item} index={index} id={item._id} userID={user._id} />
             ))}
           </ul>
         </div>
@@ -73,7 +75,7 @@ const TodoList = () => {
         <div>
           <ul>
             {completedTasks.map((item, index) => (
-              <ListElement key={index} item={item} index={index} />
+              <ListElement key={index} item={item} index={index} id={item._id} userID={user._id} />
             ))}
           </ul>
         </div>

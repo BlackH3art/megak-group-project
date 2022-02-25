@@ -18,7 +18,7 @@ export const addTask = async (req: Request, res: Response) => {
         const taskId = await TaskRecord.addTask(req.body)
         user.tasks.push(await TaskRecord.getOne(taskId))
         await user.save()
-        // @ts-ignore
+
         res.status(200).json({info: 'Task created'})
     } catch (error) {
         console.log(error)
@@ -49,7 +49,6 @@ export const updateTask = async (req: Request, res: Response) => {
 }
 
 export const getAllTasks = async (req: Request, res: Response) => {
-    // @ts-ignore
     try {
         // @ts-ignore
         const tasks = await TaskRecord.getAllUserTasks(req.user._id)

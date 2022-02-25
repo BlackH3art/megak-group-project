@@ -3,6 +3,8 @@ import { Task } from "../models/task";
 import { User } from "../models/user";
 import { TaskType } from "../types/taskType";
 import { ValidationError } from "../../utils/errors";
+import {Users} from "../models/MyUserModel";
+import {MyTaskType} from "../types/myTaskType";
 
 
 export class TaskRecord {
@@ -33,8 +35,8 @@ export class TaskRecord {
         return Task.find();
     }
 
-    public static async getAllUserTasks(id: string): Promise<TaskType[]> {
-        const user = await User.findById(id).populate('tasks');
+    public static async getAllUserTasks(id: any): Promise<MyTaskType[]> {
+        const user = await Users.findById(id)
         return user.tasks;
     }
 }
