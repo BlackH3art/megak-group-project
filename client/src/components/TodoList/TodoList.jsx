@@ -9,14 +9,7 @@ const TodoList = () => {
 
   const defaultAddTaskState = { task: '', createdAt: '', isDone: false};
   const [taskToDo, setTaskToDo] = useState(defaultAddTaskState);
-  const { user, tasks } = useContext(UserContext);
-
-  const mockdata = [
-    { task: "zjeść trampki", done: true },
-    { task: "zjeść pomidorki", done: false },
-    { task: "ugotować papugę", done: true },
-    { task: "maszerować kombinezony", done: true },
-  ]
+  const { user, tasks, setTasks } = useContext(UserContext);
 
   const completedTasks = tasks.filter(item => item.isDone === true);
   const notCompletedTasks = tasks.filter(item => item.isDone === false);
@@ -42,6 +35,9 @@ const TodoList = () => {
       const response = await api.addNewTask(user._id, taskToAdd);
       
       if (response) {
+        const res = await api.getTasks(user._id);
+
+        setTasks(res.data);
         setTaskToDo(defaultAddTaskState);
       }
 

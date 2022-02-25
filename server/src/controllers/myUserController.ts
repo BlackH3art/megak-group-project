@@ -41,6 +41,7 @@ export const addTask = async (req: Request, res: Response) => {
 }
 
 
+
 export const getUserTasks =  async (req: Request, res: Response) => {
 
   const {userId} = req.params;
@@ -48,6 +49,7 @@ export const getUserTasks =  async (req: Request, res: Response) => {
   const user = await Users.findById(userId);
   res.status(200).json(user.tasks);
 }
+
 
 
 export const updateTask = async (req: Request, res: Response) => {
@@ -58,8 +60,12 @@ export const updateTask = async (req: Request, res: Response) => {
 
   try {
 
-    // sprawdzenie czy ID jes poprawne
-    if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send('No user with that ID');
+    // sprawdzenie czy podane ID są poprawne
+    if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({ info: "Invalid user id"});
+    if(!mongoose.Types.ObjectId.isValid(taskId)) return res.status(404).json({ info: "Invalid task id"});
+
+    // sprawdzenie czy istnieje task o tym ID
+    if(!(await Users.findById(userId)).tasks.id(taskId)) return res.status(404).send('No task with that ID');
 
     const user: MyUserInterface = await Users.findById(userId);
 
@@ -87,21 +93,24 @@ export const updateTask = async (req: Request, res: Response) => {
 
 
 export const deleteTask = async (req: Request, res: Response) => {
+
   const {userId, taskId} = req.params;
+
   try {
-    // sprawdzenie czy ID użytkownika jest poprawne
-    if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send('No user with that ID');
+    // sprawdzenie czy podane ID są poprawne
+    if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({ info: "Invalid user id"});
+    if(!mongoose.Types.ObjectId.isValid(taskId)) return res.status(404).json({ info: "Invalid task id"});
+
     // sprawdzenie czy istnieje task o tym ID
     if(!(await Users.findById(userId)).tasks.id(taskId)) return res.status(404).send('No task with that ID');
-    // usuwanie subdokumentu z tabeli tasków w znalezionym użytkowniku
-    Users.findOneAndUpdate(
-        { _id: userId },
-        { $pull: { tasks: { _id: taskId} } },
-        { new: true },
-        (err) => {
-          if (err) { console.log(err) }
-        }
-    )
+
+
+    // usuwanie
+    const user: MyUserInterface = await Users.findById(userId);
+    await user.tasks.id(taskId).remove();
+
+    await user.save();
+
 
     res.status(200).json({ info: `task ID: ${taskId} has been deleted successfully` });
 
@@ -112,6 +121,9 @@ export const deleteTask = async (req: Request, res: Response) => {
     res.status(400).json({ info: "Error with deleting task"});
   }
 }
-export const deleteUser = (req: Request, res: Response) => {
+
+
+
+export const deleteUser = async (req: Request, res: Response) => {
   return;
 }
