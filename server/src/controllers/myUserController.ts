@@ -125,17 +125,23 @@ export const deleteTask = async (req: Request, res: Response) => {
 
 
 export const deleteUser = async (req: Request, res: Response) => {
+
   const { userId } = req.params;
+
   try {
     // sprawdzenie czy podane ID usera jest poprawne oraz czy istnieje taki użytkownik
     if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({ info: "Invalid user id"});
     if(!await Users.findById(userId)) return res.status(404).send('No user with that ID');
+
     // usuwanie użytkownika o wskazanym numerze ID
     await Users.findByIdAndDelete(userId);
+
     res.status(200).json(`Account ID: ${userId} has been deleted`);
+
   } catch (error) {
     console.log('error deleting user', error.message);
     console.log(error);
+
     res.status(400).json({ info: "Error with deleting user"});
   }
 }

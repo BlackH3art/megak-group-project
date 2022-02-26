@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { validateEmail } from "../../utils/validateEmail";
 import * as bcrypt from 'bcrypt';
-import {Task} from "./task";
 import { myTaskSchema } from './MyTaskModel';
 import { MyUserInterface } from 'src/types/myUserInterface';
 
@@ -34,15 +33,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.post('deleteOne', async (doc) => {
-    if(doc) {
-        await Task.deleteMany({
-            _id: {
-                $in: doc.tasks,
-            },
-        });
-    }
-});
+
 
 /**
  * metoda porównująca wprowadzone hasło z hashem przechowywanym w bazie danych - zwraca boolean

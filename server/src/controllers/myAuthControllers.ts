@@ -9,17 +9,15 @@ export const signIn = async (req: Request, res: Response) => {
   try {
     // zalogowanie użytkownika
     const user = await MyUserRecord.findByEmail(String(req.body.email));
-    if(!user) res.status(401).json({info:'Entered data is not valid'});
+    if(!user) return res.status(401).json({info:'Entered data is not valid'});
 
     // sprawdzenie hasła
     const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
-    if(!isPasswordValid) res.status(401).json({info:'Entered data is not valid'});
-
+    if(!isPasswordValid) return res.status(401).json({info:'Entered data is not valid'});
 
     const token = jwt.sign(user, process.env.JWT_ACCESS, {expiresIn:'10m'});
 
     res.status(200).json({ user, token });
-
 
   } catch (error) {
 
